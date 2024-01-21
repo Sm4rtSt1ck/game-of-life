@@ -21,6 +21,7 @@ public class Scene extends JFrame{
     public Scene(Field field) {
         // setAlwaysOnTop(true);
         setTitle("Game Of Life");
+        setResizable(false);
         setIconImage(new ImageIcon("res/cell.png").getImage());
         setLocation(400, 0);
         setVisible(true);
@@ -28,8 +29,8 @@ public class Scene extends JFrame{
         getContentPane().setBackground(new Color(171, 150, 189));
 
         this.field = field;
-        cellSize = WIDTH / (field.getCols());
-        HEIGHT = cellSize * (field.getRows());
+        cellSize = WIDTH / (field.cols);
+        HEIGHT = cellSize * (field.rows);
         setSize(WIDTH, HEIGHT);
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -54,10 +55,13 @@ public class Scene extends JFrame{
                 g.drawImage(image, 0, 0, this);
                 Font font = Font.createFont(Font.TRUETYPE_FONT, new File("res/TsukimiRounded-Bold.ttf"));
                 g.setFont(font.deriveFont(50f));
+                g.drawString("THE GAME", WIDTH / 2 - 150, HEIGHT / 2 - 30);
+                g.drawString("HAS ENDED", WIDTH / 2 - 158, HEIGHT / 2 + 30);
+                g.setFont(font.deriveFont(25f));
+                g.drawString("CREATED BY: LEONID ABOLTUS", WIDTH - 470, 70);
             } catch (FontFormatException | IOException e) {
                 throw new RuntimeException(e);
             }
-            g.drawString("GAME ENDED", WIDTH / 2 - 200, HEIGHT / 2);
             return;
         }
 
@@ -68,8 +72,8 @@ public class Scene extends JFrame{
             g.fillRect(0, y-1, WIDTH, 2);
         }
         // g.setColor(new Color(106, 62, 152));
-        for (int row = 0; row < field.getRows(); row++) {
-            for (int col = 0; col < field.getCols(); col++) {
+        for (int row = 0; row < field.rows; row++) {
+            for (int col = 0; col < field.cols; col++) {
                 if (field.getCell(row, col).getAlive()) {
                     g.setColor(new Color(106, 62, 152));
                     g.fillRoundRect(col * cellSize + cellSize/20, row * cellSize + cellSize/20, (int)(cellSize/1.11), (int)(cellSize/1.11), cellSize/3, cellSize/3);

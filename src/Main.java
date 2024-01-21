@@ -7,11 +7,11 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
 
-        System.out.print("Enter the path of the file of the cells' matrix >> ");
+        System.out.print("Enter a path of a file of the cells' matrix >> ");
         String fileName = in.nextLine();
-        System.out.print("Set the start position on the colony (row & col) >> ");
+        System.out.print("Set a start position of the colony (row & col) >> ");
         int row = in.nextInt(), col = in.nextInt();
-        System.out.print("Set the size of the field (rows & cols) >> ");
+        System.out.print("Set a size of the field (rows & cols) >> ");
         int rows = in.nextInt(), cols = in.nextInt();
         Cell[][] matrix = createMatrix(fileName, row, col, rows, cols);
         Field field = new Field(matrix);

@@ -2,12 +2,17 @@ import java.util.ArrayList;
 
 public class Field {
     private final Cell[][] matrix;
-    private final ArrayList<boolean[][]> pastMatrices = new ArrayList<>();
+    private final ArrayList<boolean[][]> pastMatrices;
     private boolean running = true;
+    public final int rows, cols;
 
     public Field(Cell[][] matrix) {
-        for (int row = 0; row < matrix.length; row++) {
-            for (int col = 0; col < matrix[row].length; col++) {
+        pastMatrices = new ArrayList<>();
+        rows = matrix.length;
+        cols = matrix[0].length;
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 Cell[] neighbours = new Cell[8];
                 byte cellIndex = 0;
 
@@ -15,19 +20,7 @@ public class Field {
                 for (int i = row - 1; i <= row + 1; i++) {
                     for (int j = col - 1; j <= col + 1; j++) {
                         if (i != row || j != col) {
-
-                            // Bounds handling
-                            int r, c;
-
-                            if (i == -1) r = matrix.length-1;
-                            else if (i == matrix.length) r = 0;
-                            else r = i;
-
-                            if (j == -1) c = matrix[0].length-1;
-                            else if (j == matrix[0].length) c = 0;
-                            else c = j;
-
-                            neighbours[cellIndex] = matrix[r][c];
+                            neighbours[cellIndex] = matrix[(rows + i) % rows][(cols + j) % cols];
                             cellIndex++;
                         }
                     }
@@ -53,8 +46,8 @@ public class Field {
         // Check similarity with all previous matrices
         for (boolean[][] pastCells : pastMatrices) {
             boolean same = true;
-            for (int row = 0; row < pastCells.length; row++) {
-                for (int col = 0; col < pastCells[0].length; col++) {
+            for (int row = 0; row < rows; row++) {
+                for (int col = 0; col < cols; col++) {
                     if (pastCells[row][col] != matrix[row][col].getAlive()) {
                         same = false;
                         break;
@@ -71,9 +64,9 @@ public class Field {
     }
     private void store() {
         // Store matrix
-        boolean[][] lastCells = new boolean[matrix.length][matrix[0].length];
-        for (int row = 0; row < matrix.length; row++) {
-            for (int col = 0; col < matrix[0].length; col++) {
+        boolean[][] lastCells = new boolean[rows][cols];
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 lastCells[row][col] = matrix[row][col].getAlive();
             }
         }
@@ -82,12 +75,6 @@ public class Field {
 
     public Cell getCell(int row, int col) {
         return matrix[row][col];
-    }
-    public int getRows() {
-        return matrix.length;
-    }
-    public int getCols() {
-        return matrix[0].length;
     }
     public boolean getRunning() {
         return running;
