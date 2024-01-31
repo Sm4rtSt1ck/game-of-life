@@ -12,13 +12,15 @@ import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 
 public class Scene extends JFrame{
-    public final int WIDTH = 1000;
+    public final int WIDTH = 800;
     public final int HEIGHT;
 
     private final Field field;
     private final int cellSize;
 
-    public Scene(Field field) {
+    Image background;
+
+    public Scene(Field field) throws IOException {
         // setAlwaysOnTop(true);
         setTitle("Game Of Life");
         setResizable(false);
@@ -31,6 +33,7 @@ public class Scene extends JFrame{
         this.field = field;
         cellSize = WIDTH / (field.cols);
         HEIGHT = cellSize * (field.rows);
+        background = ImageIO.read(new File("res/background.png"));
         setSize(WIDTH, HEIGHT);
         addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -51,8 +54,7 @@ public class Scene extends JFrame{
         if (!field.getRunning()) {
             // g.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
             try {
-                Image image = ImageIO.read(new File("res/background.png"));
-                g.drawImage(image, 0, 0, this);
+                g.drawImage(background, 0, 0, this);
                 Font font = Font.createFont(Font.TRUETYPE_FONT, new File("res/TsukimiRounded-Bold.ttf"));
                 g.setFont(font.deriveFont(50f));
                 g.drawString("THE GAME", WIDTH / 2 - 150, HEIGHT / 2 - 30);

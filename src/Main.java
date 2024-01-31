@@ -2,9 +2,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Scanner in = new Scanner(System.in);
 
         System.out.print("Enter a path of a file of the cells' matrix >> ");
@@ -20,13 +21,13 @@ public class Main {
 
         System.out.println("\nPress SPACE in the active game window to update the field");
 
-        // while (in.hasNext()) {
-        //     in.next();
-        //     field.update();
-        //     scene.repaint();
-        //     // TimeUnit.MILLISECONDS.sleep(200);
-        //     // System.out.println(field);
-        // }
+//         while (field.getRunning()) {
+             // in.next();
+//             field.update();
+//             scene.repaint();
+//             TimeUnit.MILLISECONDS.sleep(100);
+             // System.out.println(field);
+//         }
 
     }
     public static Cell[][] createMatrix(String fileName, int startRow, int startCol, int rows, int cols) throws IOException {
